@@ -83,7 +83,7 @@ namespace Cohesity.Powershell.Cmdlets.Agent
 
             foreach(var node in nodes)
             {
-                var childrenNodes = node.Nodes;
+                var childrenNodes = node.Nodes.Cast<ProtectionSourceNode>().ToList();
                 node.Nodes = null;
                 result.Add(node);
                 result.AddRange(FlattenNodes(childrenNodes));

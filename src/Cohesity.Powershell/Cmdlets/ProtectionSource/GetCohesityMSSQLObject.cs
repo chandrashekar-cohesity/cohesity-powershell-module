@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using Cohesity.Model;
 using Cohesity.Powershell.Common;
 
 namespace Cohesity.Powershell.Cmdlets.ProtectionSource
@@ -75,13 +76,15 @@ namespace Cohesity.Powershell.Cmdlets.ProtectionSource
                     {
                         foreach (var applicationNode in result.ApplicationServer.ApplicationNodes)
                         {
-                           protectionSources.Add(applicationNode.ProtectionSource);
+                           ProtectionSourceNode protectionSourceNode = (ProtectionSourceNode)applicationNode;
+                           protectionSources.Add(protectionSourceNode.ProtectionSource);
 
-                            if(applicationNode.Nodes != null)
+                            if(protectionSourceNode.Nodes != null)
                             {
-                                foreach (var node in applicationNode.Nodes)
+                                foreach (var node in protectionSourceNode.Nodes)
                                 {
-                                    protectionSources.Add(node.ProtectionSource);
+                                    ProtectionSourceNode psNode = (ProtectionSourceNode)node;
+                                    protectionSources.Add(psNode.ProtectionSource);
                                 }
                             }
                         }
